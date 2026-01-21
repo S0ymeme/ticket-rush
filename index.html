@@ -316,6 +316,29 @@
             border-color: rgba(255,255,255,0.2);
         }
 
+        .section.completed {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+            border-color: #34d399 !important;
+            box-shadow: 0 0 15px rgba(16, 185, 129, 0.5);
+            animation: completedPulse 2s infinite;
+        }
+
+        .section.completed::after {
+            content: '✓';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 1.2rem;
+            color: white;
+            text-shadow: 0 0 5px rgba(0,0,0,0.5);
+        }
+
+        @keyframes completedPulse {
+            0%, 100% { box-shadow: 0 0 10px rgba(16, 185, 129, 0.5); }
+            50% { box-shadow: 0 0 25px rgba(16, 185, 129, 0.8); }
+        }
+
         /* Seat Selection Modal */
         .modal-overlay {
             position: fixed;
@@ -454,6 +477,201 @@
         .results-overlay.active {
             display: flex;
             animation: fadeIn 0.5s ease;
+        }
+
+        /* Special Modal */
+        .special-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(255, 20, 147, 0.95) 0%, rgba(139, 0, 139, 0.95) 50%, rgba(75, 0, 130, 0.95) 100%);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 3000;
+            backdrop-filter: blur(30px);
+            overflow: hidden;
+        }
+
+        .special-overlay.active {
+            display: flex;
+            animation: fadeIn 0.8s ease;
+        }
+
+        .special-overlay::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+            background-size: 30px 30px;
+            animation: sparkleMove 20s linear infinite;
+        }
+
+        @keyframes sparkleMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(-50%, -50%); }
+        }
+
+        .floating-hearts {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .floating-heart {
+            position: absolute;
+            font-size: 2rem;
+            animation: floatUp 4s ease-in-out infinite;
+            opacity: 0.8;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(100vh) rotate(0deg) scale(0.5);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.8;
+            }
+            90% {
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg) scale(1.2);
+                opacity: 0;
+            }
+        }
+
+        .special-card {
+            position: relative;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 40px;
+            border: 3px solid rgba(255, 255, 255, 0.4);
+            padding: 60px 80px;
+            text-align: center;
+            box-shadow: 
+                0 0 60px rgba(255, 105, 180, 0.6),
+                0 0 120px rgba(255, 20, 147, 0.4),
+                inset 0 0 60px rgba(255, 255, 255, 0.1);
+            animation: specialCardEntry 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            backdrop-filter: blur(20px);
+            z-index: 1;
+        }
+
+        @keyframes specialCardEntry {
+            0% { transform: scale(0) rotate(-10deg); opacity: 0; }
+            50% { transform: scale(1.1) rotate(5deg); }
+            100% { transform: scale(1) rotate(0deg); opacity: 1; }
+        }
+
+        .big-heart {
+            font-size: 8rem;
+            animation: heartBeat 1.2s ease-in-out infinite, heartGlow 2s ease-in-out infinite alternate;
+            display: inline-block;
+            filter: drop-shadow(0 0 30px rgba(255, 105, 180, 0.8));
+        }
+
+        @keyframes heartBeat {
+            0%, 100% { transform: scale(1); }
+            15% { transform: scale(1.3); }
+            30% { transform: scale(1); }
+            45% { transform: scale(1.2); }
+            60% { transform: scale(1); }
+        }
+
+        @keyframes heartGlow {
+            0% { filter: drop-shadow(0 0 20px rgba(255, 105, 180, 0.6)); }
+            100% { filter: drop-shadow(0 0 50px rgba(255, 20, 147, 1)); }
+        }
+
+        .special-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 4rem;
+            font-weight: 900;
+            color: white;
+            text-shadow: 
+                0 0 20px rgba(255, 255, 255, 0.8),
+                0 0 40px rgba(255, 105, 180, 0.8),
+                0 0 60px rgba(255, 20, 147, 0.6);
+            margin: 30px 0;
+            animation: titlePulse 2s ease-in-out infinite, titleFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes titlePulse {
+            0%, 100% { text-shadow: 0 0 20px rgba(255,255,255,0.8), 0 0 40px rgba(255,105,180,0.8); }
+            50% { text-shadow: 0 0 40px rgba(255,255,255,1), 0 0 80px rgba(255,20,147,1), 0 0 100px rgba(255,105,180,0.8); }
+        }
+
+        @keyframes titleFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .special-subtitle {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 2rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 40px;
+            letter-spacing: 5px;
+            animation: subtitleFade 3s ease-in-out infinite;
+        }
+
+        @keyframes subtitleFade {
+            0%, 100% { opacity: 0.9; }
+            50% { opacity: 1; }
+        }
+
+        .special-message {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1.3rem;
+            color: rgba(255, 255, 255, 0.8);
+            max-width: 400px;
+            margin: 0 auto 30px;
+            line-height: 1.8;
+        }
+
+        .btn-special {
+            background: linear-gradient(135deg, #ff69b4 0%, #ff1493 50%, #c71585 100%);
+            color: white;
+            border: none;
+            padding: 18px 50px;
+            font-family: 'Orbitron', monospace;
+            font-size: 1.1rem;
+            font-weight: 700;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 
+                0 0 30px rgba(255, 105, 180, 0.6),
+                0 5px 20px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        .btn-special:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 
+                0 0 50px rgba(255, 105, 180, 0.8),
+                0 10px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        .sparkle {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: white;
+            border-radius: 50%;
+            animation: sparkle 1.5s ease-in-out infinite;
+        }
+
+        @keyframes sparkle {
+            0%, 100% { transform: scale(0); opacity: 0; }
+            50% { transform: scale(1); opacity: 1; }
         }
 
         .results-card {
@@ -739,6 +957,21 @@
         </div>
     </div>
 
+    <!-- Special Modal -->
+    <div class="special-overlay" id="specialOverlay">
+        <div class="floating-hearts" id="floatingHearts"></div>
+        <div class="special-card">
+            <div class="big-heart">💖</div>
+            <h1 class="special-title">HOLAA</h1>
+            <p class="special-subtitle">✨ TE QUIERO ✨</p>
+            <p class="special-message">
+                Creo que esto es muy cursi pero quería que lo vieras jsjs. 
+                Gracias por existir :3 💕
+            </p>
+            <button class="btn-special" onclick="closeSpecialModal()">💝 Continuar 💝</button>
+        </div>
+    </div>
+
     <script>
         // Game State
         let gameActive = false;
@@ -750,6 +983,9 @@
         let totalClicks = 0;
         let timerInterval = null;
         let highScore = localStorage.getItem('ticketRushHighScore') || 0;
+        let currentSectionElement = null;
+        let currentSectionAvailable = 0;
+        let specialShown = false;
 
         // DOM Elements
         const timerEl = document.getElementById('timer');
@@ -762,6 +998,7 @@
         const modalTitle = document.getElementById('modalTitle');
         const seatsGrid = document.getElementById('seatsGrid');
         const resultsOverlay = document.getElementById('resultsOverlay');
+        const specialOverlay = document.getElementById('specialOverlay');
         const venue = document.getElementById('venue');
         const venueContainer = document.getElementById('venueContainer');
         const instructions = document.getElementById('instructions');
@@ -959,6 +1196,37 @@
         // Initialize sections
         generateSections();
 
+        // Create floating hearts for special modal
+        function createFloatingHearts() {
+            const container = document.getElementById('floatingHearts');
+            container.innerHTML = '';
+            const hearts = ['💖', '💕', '💗', '💓', '💝', '💘', '❤️', '💜', '💙'];
+            
+            for (let i = 0; i < 30; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'floating-heart';
+                heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+                heart.style.left = `${Math.random() * 100}%`;
+                heart.style.animationDelay = `${Math.random() * 4}s`;
+                heart.style.animationDuration = `${3 + Math.random() * 3}s`;
+                heart.style.fontSize = `${1 + Math.random() * 2}rem`;
+                container.appendChild(heart);
+            }
+        }
+
+        // Show special modal
+        function showSpecialModal() {
+            if (specialShown) return;
+            specialShown = true;
+            createFloatingHearts();
+            specialOverlay.classList.add('active');
+        }
+
+        // Close special modal
+        function closeSpecialModal() {
+            specialOverlay.classList.remove('active');
+        }
+
         // Scroll venue to center
         function scrollVenueToCenter() {
             const venueRect = venue.getBoundingClientRect();
@@ -1022,6 +1290,14 @@
             }
         }
 
+        // Mark section as completed
+        function markSectionCompleted() {
+            if (currentSectionElement) {
+                currentSectionElement.classList.add('completed');
+                currentSectionElement.textContent = '';
+            }
+        }
+
         // Start game
         function startGame() {
             gameActive = true;
@@ -1031,6 +1307,8 @@
             sectionsVisited = 0;
             totalAvailable = 0;
             totalClicks = 0;
+            currentSectionElement = null;
+            specialShown = false;
             
             updateDisplay();
             updateLivesDisplay();
@@ -1039,9 +1317,13 @@
             resetBtn.disabled = false;
             instructions.style.display = 'none';
             
-            // Enable all sections
+            // Enable all sections and remove completed class
             document.querySelectorAll('.section').forEach(el => {
                 el.classList.remove('disabled');
+                el.classList.remove('completed');
+                // Restore original text
+                const index = el.dataset.index;
+                el.textContent = sections[index].id;
             });
             
             // Scroll to center the venue
@@ -1088,6 +1370,11 @@
                 highScoreEl.textContent = highScore;
             }
             
+            // Check for special modal
+            if (score >= 12 && !specialShown) {
+                showSpecialModal();
+            }
+            
             // Show results
             document.getElementById('finalScore').textContent = score;
             document.getElementById('finalSections').textContent = sectionsVisited;
@@ -1096,7 +1383,19 @@
             const accuracy = totalClicks > 0 ? Math.round((score / totalClicks) * 100) : 0;
             document.getElementById('accuracy').textContent = `${accuracy}%`;
             
-            resultsOverlay.classList.add('active');
+            setTimeout(() => {
+                if (!specialOverlay.classList.contains('active')) {
+                    resultsOverlay.classList.add('active');
+                } else {
+                    // Wait for special modal to close
+                    const checkInterval = setInterval(() => {
+                        if (!specialOverlay.classList.contains('active')) {
+                            clearInterval(checkInterval);
+                            resultsOverlay.classList.add('active');
+                        }
+                    }, 100);
+                }
+            }, specialShown ? 0 : 100);
         }
 
         // Reset game
@@ -1110,6 +1409,8 @@
             sectionsVisited = 0;
             totalAvailable = 0;
             totalClicks = 0;
+            currentSectionElement = null;
+            specialShown = false;
             
             updateDisplay();
             updateLivesDisplay();
@@ -1118,8 +1419,10 @@
             resetBtn.disabled = true;
             instructions.style.display = 'block';
             
-            document.querySelectorAll('.section').forEach(el => {
+            document.querySelectorAll('.section').forEach((el, i) => {
                 el.classList.add('disabled');
+                el.classList.remove('completed');
+                el.textContent = sections[el.dataset.index].id;
             });
             
             const timerBox = timerEl.parentElement;
@@ -1127,6 +1430,7 @@
             
             closeModal();
             resultsOverlay.classList.remove('active');
+            specialOverlay.classList.remove('active');
         }
 
         // Play again
@@ -1145,11 +1449,12 @@
 
         // Open section
         function openSection(section, element) {
-            if (!gameActive) return;
+            if (!gameActive || element.classList.contains('completed')) return;
             
             sectionsVisited++;
             updateDisplay();
             
+            currentSectionElement = element;
             modalTitle.textContent = section.id;
             generateSeats();
             modalOverlay.classList.add('active');
@@ -1161,6 +1466,7 @@
             
             // Random number of available seats (1-4)
             const availableCount = Math.floor(Math.random() * 4) + 1;
+            currentSectionAvailable = availableCount;
             const totalSeats = 40 * 40;
             
             // Generate random positions for available seats
@@ -1210,6 +1516,8 @@
                 // Check if all available seats in this section are selected
                 const remainingAvailable = seatsGrid.querySelectorAll('.seat.available').length;
                 if (remainingAvailable === 0) {
+                    // Mark section as completed
+                    markSectionCompleted();
                     // Auto-close after a brief delay
                     setTimeout(() => {
                         if (gameActive) closeModal();
@@ -1247,6 +1555,7 @@
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') {
                 closeModal();
+                closeSpecialModal();
             }
             if (e.key === ' ' && !gameActive && !resultsOverlay.classList.contains('active')) {
                 e.preventDefault();
